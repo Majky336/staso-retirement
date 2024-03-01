@@ -3,23 +3,49 @@
     <head>
         <title>Countdown Timer</title>
         <style>
+            html,
             body {
-                font-family: Arial, sans-serif;
+                font-family: "Sans Serif", monospace;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
-                background-color: #f0f0f0;
+                background-color: #0a192f;
+                color: #ffc107;
             }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
             #countdown {
                 text-align: center;
+                align-items: stretch;
+                width: 100%;
+            }
+            #timer {
+                display: flex;
+                width: 100%;
+                margin: 0 0 auto;
+                gap: 1.5rem;
+            }
+            .time-container {
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             .time {
-                font-size: 16rem;
+                display: inline-block;
+                font-size: 12rem;
             }
             .timeunit {
                 font-size: 1.5rem;
-                margin-right: 2rem;
             }
         </style>
     </head>
@@ -27,18 +53,30 @@
         <div id="countdown">
             <h1>Stano ide do dôchodku o:</h1>
             <div id="timer">
-                <span class="time" id="days"></span>
-                <span class="timeunit">dní</span>
-                <span class="time" id="hours"></span>
-                <span class="timeunit">hodín</span>
-                <span class="time" id="minutes"></span>
-                <span class="timeunit">minút</span>
-                <span class="time" id="seconds"></span>
-                <span class="timeunit">sekúnd</span>
+                <div class="time-container">
+                    <span class="time" id="days"></span>
+                    <span class="timeunit">dní</span>
+                </div>
+                <div class="time-container">
+                    <span class="time" id="hours"></span>
+                    <span class="timeunit">hodín</span>
+                </div>
+                <div class="time-container">
+                    <span class="time" id="minutes"></span>
+                    <span class="timeunit">minút</span>
+                </div>
+                <div class="time-container">
+                    <span class="time" id="seconds"></span>
+                    <span class="timeunit">sekúnd</span>
+                </div>
             </div>
         </div>
 
         <script>
+            function formatNumber(number) {
+                return number < 10 ? "0" + number : number;
+            }
+
             function updateCountdown() {
                 const countdownDate = new Date(
                     "January 13, 2025 00:00:00",
@@ -47,14 +85,20 @@
                 const difference = countdownDate - now;
 
                 // Time calculations
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor(
-                    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                const days = formatNumber(
+                    Math.floor(difference / (1000 * 60 * 60 * 24)),
                 );
-                const minutes = Math.floor(
-                    (difference % (1000 * 60 * 60)) / (1000 * 60),
+                const hours = formatNumber(
+                    Math.floor(
+                        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                    ),
                 );
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                const minutes = formatNumber(
+                    Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+                );
+                const seconds = formatNumber(
+                    Math.floor((difference % (1000 * 60)) / 1000),
+                );
 
                 // Display the result
                 document.getElementById("days").innerText = days;
