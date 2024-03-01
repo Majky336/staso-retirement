@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Countdown Timer</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f0f0f0;
+            }
+            #countdown {
+                text-align: center;
+            }
+            .time {
+                font-size: 16rem;
+            }
+            .timeunit {
+                font-size: 1.5rem;
+                margin-right: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="countdown">
+            <h1>Stano ide do dôchodku o:</h1>
+            <div id="timer">
+                <span class="time" id="days"></span>
+                <span class="timeunit">dní</span>
+                <span class="time" id="hours"></span>
+                <span class="timeunit">hodín</span>
+                <span class="time" id="minutes"></span>
+                <span class="timeunit">minút</span>
+                <span class="time" id="seconds"></span>
+                <span class="timeunit">sekúnd</span>
+            </div>
+        </div>
+
+        <script>
+            function updateCountdown() {
+                const countdownDate = new Date(
+                    "January 13, 2025 00:00:00",
+                ).getTime();
+                const now = new Date().getTime();
+                const difference = countdownDate - now;
+
+                // Time calculations
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor(
+                    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                );
+                const minutes = Math.floor(
+                    (difference % (1000 * 60 * 60)) / (1000 * 60),
+                );
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                // Display the result
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+
+                // If the countdown is over, display a message
+                if (difference < 0) {
+                    clearInterval(x);
+                    document.getElementById("timer").innerHTML =
+                        "The countdown is over!";
+                }
+            }
+
+            // Update the countdown every 1 second
+            const x = setInterval(updateCountdown, 1000);
+        </script>
+    </body>
+</html>
